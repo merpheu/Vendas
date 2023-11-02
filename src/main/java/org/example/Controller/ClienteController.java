@@ -26,6 +26,27 @@ public class ClienteController {
             return  ResponseEntity.ok(cliente.get());
         }
         return  ResponseEntity.notFound().build();
-
     }
+          @PostMapping("/api/clientes")
+          @ResponseBody
+         public ResponseEntity saveCli (@RequestBody Cliente cliente){
+                Cliente clienteSalvo = clientes.save(cliente);
+                return ResponseEntity.ok(clienteSalvo);
+         }
+         @DeleteMapping("/api/clientes{id}")
+         @ResponseBody
+         public ResponseEntity deleteCli (@PathVariable Integer id){
+           Optional<Cliente> cliente = clientes.findById(id);
+             if(cliente.isPresent()){
+                 return  ResponseEntity.noContent().build();
+             }
+             return  ResponseEntity.notFound().build();
+         }
+
+         public ResponseEntity update(@PathVariable Integer id,@RequestBody Cliente cliente){
+              return clientes.findById(id).map(clientexistente-> {cliente.setId(clientexistente.getId());
+                  clientes.save(cliente);
+                  return ResponseEntity.noContent().build();
+              }).orElseGet( ()-> ResponseEntity.notFound().build());
+         }
 }
