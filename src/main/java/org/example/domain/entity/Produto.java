@@ -1,6 +1,12 @@
 package org.example.domain.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import java.math.BigDecimal;
+@Entity
 
 public class Produto {
     public Integer getId() {
@@ -26,7 +32,8 @@ public class Produto {
     public void setPreco(BigDecimal preco) {
         this.preco = preco;
     }
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String decricao;
     private BigDecimal preco;
